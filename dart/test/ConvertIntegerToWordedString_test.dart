@@ -8,5 +8,11 @@ void main() {
       var words = integerToWordedString(number);
       expect(words.toLowerCase(), equals('one'));
     });
+
+    test('First negative integer is -1', () {
+      var number = -1;
+      var words = integerToWordedString(number);
+      expect(words.toLowerCase(), equals('negative one'));
+    });
   });
 }
