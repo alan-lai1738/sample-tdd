@@ -1,0 +1,13 @@
+name: my_project_name
+description: A new Dart project
+version: 1.0.0
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'  # Specify the Dart SDK version here
+
+dependencies:
+  # Add dependencies here, e.g.
+  test: ^1.16.0  # Include test package
+
+dev_dependencies:
+  # Add development dependencies here
