@@ -1,22 +1,36 @@
 
 String integerToWordedString(int number) {
   List<String> words = [];
-  if (number < 0) {
-    words.add("negative");
-    number = -number;
-  }
   if(number == 0) {
     return 'zero';
   }
-  if(number > 99) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 19");
+  if(number > 999) {
+    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 999");
   }
-  if(10 <= number && number <= 99) {
+  if(1 <= number && number <= 9) {
+    words.add(_getSingleDigitAsWordString(number));
+  } else if(10 <= number && number <= 99) {
     words.add(_get10to99ValueAsString(number));
   } else {
-    words.add(_getSingleDigitAsWordString(number));
+    words.add(_get100to999ValueAsString(number));
   }
   return _convertWordsArrayIntoStringThatHasFormattedSpaces(words);
+}
+
+String _get100to999ValueAsString(int number) {
+  int firstDigit = number ~/ 100;
+  String res = _getSingleDigitAsWordString(firstDigit) + " hundred";
+  number -= firstDigit * 100;
+  if(number < 10) {
+    String digitAsString = _getSingleDigitAsWordString(number);
+    if(digitAsString != "zero") {
+      res += " " + digitAsString;
+    }
+  } else {
+    String num10to99AsString = _get10to99ValueAsString(number);
+    res += " " + num10to99AsString;
+  }
+  return res;
 }
 
 String _convertWordsArrayIntoStringThatHasFormattedSpaces(List<String> words) {

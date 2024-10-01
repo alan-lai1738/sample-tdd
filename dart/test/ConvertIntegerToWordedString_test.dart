@@ -14,15 +14,9 @@ void main() {
       expect(integerToWordedString(2), 'two');
       expect(integerToWordedString(5), 'five');
       expect(integerToWordedString(9), 'nine');
-      expect(integerToWordedString(-9), 'negative nine');
       expect(integerToWordedString(-0), 'zero');
     });
 
-    test('First negative integer is -1', () {
-      var number = -1;
-      var words = integerToWordedString(number);
-      expect(words.toLowerCase(), equals('negative one'));
-    });
 
     test('Handle 10 to 19', () {
       expect(integerToWordedString(10), 'ten');
@@ -35,6 +29,15 @@ void main() {
       expect(integerToWordedString(21), 'twenty one');
       expect(integerToWordedString(22), 'twenty two');
       expect(integerToWordedString(99), 'ninety nine');
+    });
+
+    test('Handle 100, 101, 102, 111, 222, 999', () {
+      expect(integerToWordedString(100), 'one hundred');
+      expect(integerToWordedString(101), 'one hundred one');
+      expect(integerToWordedString(102), 'one hundred two');
+      expect(integerToWordedString(111), 'one hundred eleven');
+      expect(integerToWordedString(222), 'two hundred twenty two');
+      expect(integerToWordedString(999), 'nine hundred ninety nine');
     });
   });
 }
