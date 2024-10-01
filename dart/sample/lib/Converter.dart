@@ -8,11 +8,11 @@ String integerToWordedString(int number) {
   if(number == 0) {
     return 'zero';
   }
-  if(number > 19) {
+  if(number > 99) {
     throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 19");
   }
-  if(10 <= number && number <= 19) {
-    words.add(_get10to19ValueAsString(number));
+  if(10 <= number && number <= 99) {
+    words.add(_get10to99ValueAsString(number));
   } else {
     words.add(_getSingleDigitAsWordString(number));
   }
@@ -32,7 +32,40 @@ String _convertWordsArrayIntoStringThatHasFormattedSpaces(List<String> words) {
   return res;
 }
 
-String _get10to19ValueAsString(int number) {
+String _get20to99ValueAsString(int number) {
+  String res = "";
+  int firstDigit = number ~/ 10;
+  res += _get20to90TensValueAsString(firstDigit);
+  if(number % 10 != 0) {
+    res += ' ' + _getSingleDigitAsWordString(number % 10);
+  }
+  return res;
+}
+
+String _get20to90TensValueAsString(int firstDigit) {
+  switch (firstDigit) {
+    case 2:
+      return 'twenty';
+    case 3:
+      return 'thirty';
+    case 4:
+      return 'forty';
+    case 5:
+      return 'fifty';
+    case 6:
+      return 'sixty';
+    case 7:
+      return 'seventy';
+    case 8:
+      return 'eighty';
+    case 9:
+      return 'ninety';
+    default:
+      throw ArgumentError('First digit must be between 2 and 9.');
+  }
+}
+
+String _get10to99ValueAsString(int number) {
   switch (number) {
     case 10:
       return 'ten';
@@ -55,7 +88,7 @@ String _get10to19ValueAsString(int number) {
     case 19:
       return 'nineteen';
     default:
-      return '';
+      return _get20to99ValueAsString(number);
   }
 }
 

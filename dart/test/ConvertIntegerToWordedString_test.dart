@@ -29,5 +29,12 @@ void main() {
       expect(integerToWordedString(11), 'eleven');
       expect(integerToWordedString(19), 'nineteen');
     });
+
+    test('Handle 20, 21, 99', () {
+      expect(integerToWordedString(20), 'twenty');
+      expect(integerToWordedString(21), 'twenty one');
+      expect(integerToWordedString(22), 'twenty two');
+      expect(integerToWordedString(99), 'ninety nine');
+    });
   });
 }
