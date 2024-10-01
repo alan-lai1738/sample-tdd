@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../sample/lib/converter.dart';   // Dart import syntax
+import '../sample/lib/converter.dart'; // Dart import syntax
 
 void main() {
   group('ConvertIntegerToWordedStringTests', () {
@@ -22,6 +22,12 @@ void main() {
       var number = -1;
       var words = integerToWordedString(number);
       expect(words.toLowerCase(), equals('negative one'));
+    });
+
+    test('Handle 10 to 19', () {
+      expect(integerToWordedString(10), 'ten');
+      expect(integerToWordedString(11), 'eleven');
+      expect(integerToWordedString(19), 'nineteen');
     });
   });
 }

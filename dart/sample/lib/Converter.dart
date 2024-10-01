@@ -1,20 +1,21 @@
 
 String integerToWordedString(int number) {
-  if(number == 0) {
-    return 'zero';
-  }
-  if(number > 9) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 9");
-  }
   List<String> words = [];
-
   if (number < 0) {
     words.add("negative");
     number = -number;
   }
-
-  words.add(_getSingleDigitAsWordString(number));
-
+  if(number == 0) {
+    return 'zero';
+  }
+  if(number > 19) {
+    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 19");
+  }
+  if(10 <= number && number <= 19) {
+    words.add(_get10to19ValueAsString(number));
+  } else {
+    words.add(_getSingleDigitAsWordString(number));
+  }
   return _convertWordsArrayIntoStringThatHasFormattedSpaces(words);
 }
 
@@ -30,6 +31,34 @@ String _convertWordsArrayIntoStringThatHasFormattedSpaces(List<String> words) {
   }
   return res;
 }
+
+String _get10to19ValueAsString(int number) {
+  switch (number) {
+    case 10:
+      return 'ten';
+    case 11:
+      return 'eleven';
+    case 12:
+      return 'twelve';
+    case 13:
+      return 'thirteen';
+    case 14:
+      return 'fourteen';
+    case 15:
+      return 'fifteen';
+    case 16:
+      return 'sixteen';
+    case 17:
+      return 'seventeen';
+    case 18:
+      return 'eighteen';
+    case 19:
+      return 'nineteen';
+    default:
+      return '';
+  }
+}
+
 
 String _getSingleDigitAsWordString(int number) {
   switch(number) {
