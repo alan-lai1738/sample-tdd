@@ -51,5 +51,16 @@ void main() {
       expect(integerToWordedString(2222), 'two thousand two hundred twenty two');
       expect(integerToWordedString(9999), 'nine thousand nine hundred ninety nine');
     });
+
+    test('Handle 10000, 10001, 10111, 11111, 21234, 67892, 99999', () {
+      expect(integerToWordedString(10000), 'ten thousand');
+      expect(integerToWordedString(10001), 'ten thousand one');
+      expect(integerToWordedString(10111), 'ten thousand one hundred eleven');
+      expect(integerToWordedString(11111), 'eleven thousand one hundred eleven');
+      expect(integerToWordedString(21234), 'twenty one thousand two hundred thirty four');
+      expect(integerToWordedString(67892), 'sixty seven thousand eight hundred ninety two');
+      expect(integerToWordedString(99999), 'ninety nine thousand nine hundred ninety nine');
+    });
+
   });
 }

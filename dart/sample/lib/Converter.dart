@@ -1,24 +1,41 @@
 
 String integerToWordedString(int number) {
-  List<String> words = [];
   if(number == 0) {
     return 'zero';
   }
-  if(number > 9999) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 9999");
+  if(number > 99999) {
+    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 99999");
   }
   if(number < 1000) {
     return _getValue0to999AsString(number);
   } else {
-    int firstDigit = number ~/ 1000;
-    String res = _getSingleDigitAsWordString(firstDigit) + " thousand";
-    number -= firstDigit * 1000;
-    String theRestOfTheDigitsAsString = _getValue0to999AsString(number);
-    if(theRestOfTheDigitsAsString != "zero") {
-      res += " " + theRestOfTheDigitsAsString;
+    List<int> numberSplitUp = _splitNumbers(number);
+    List<String> words = [];
+    List<String> numberNames = [" thousand"];
+    for(int i = 0; i < numberSplitUp.length; i++) {
+      if(numberSplitUp[i] != 0) {
+        // we don't need to add a numberName for when the three digits are less than 1000
+        String numAsString = _getValue0to999AsString(numberSplitUp[i]) + ((i < 1) ? numberNames[i] : "");
+        words.add(numAsString);
+      }
     }
-    return res;
+    return _convertWordsArrayIntoStringThatHasFormattedSpaces(words);
   }
+}
+
+List<int> _splitNumbers(int number) {
+  List<int> numSplit = [];
+  String numToStr = number.toString();
+
+  String lastThreeStr = numToStr.substring(numToStr.length - 3);
+  int lastThree = int.parse(lastThreeStr); 
+  numSplit.insert(0, lastThree);
+
+  String firstPartStr = numToStr.substring(0, numToStr.length - 3);
+  int firstThreeNums = int.parse(firstPartStr); 
+  numSplit.insert(0, firstThreeNums);
+
+  return numSplit;
 }
 
 String _getValue0to999AsString(int number) {
