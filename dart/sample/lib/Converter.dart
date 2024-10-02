@@ -3,8 +3,8 @@ String integerToWordedString(int number) {
   if(number == 0) {
     return 'zero';
   }
-  if(number > 99999) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 99999");
+  if(number > 999999) {
+    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 999999");
   }
   if(number < 1000) {
     return _getValue0to999AsString(number);

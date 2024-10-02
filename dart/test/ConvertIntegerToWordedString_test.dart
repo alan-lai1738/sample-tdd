@@ -17,7 +17,6 @@ void main() {
       expect(integerToWordedString(-0), 'zero');
     });
 
-
     test('Handle 10 to 19', () {
       expect(integerToWordedString(10), 'ten');
       expect(integerToWordedString(11), 'eleven');
@@ -40,27 +39,45 @@ void main() {
       expect(integerToWordedString(999), 'nine hundred ninety nine');
     });
 
-
-
     test('Handle 1000, 1001, 1002, 1011, 1111, 2222, 9999', () {
       expect(integerToWordedString(1000), 'one thousand');
       expect(integerToWordedString(1001), 'one thousand one');
       expect(integerToWordedString(1002), 'one thousand two');
       expect(integerToWordedString(1011), 'one thousand eleven');
       expect(integerToWordedString(1111), 'one thousand one hundred eleven');
-      expect(integerToWordedString(2222), 'two thousand two hundred twenty two');
-      expect(integerToWordedString(9999), 'nine thousand nine hundred ninety nine');
+      expect(
+          integerToWordedString(2222), 'two thousand two hundred twenty two');
+      expect(integerToWordedString(9999),
+          'nine thousand nine hundred ninety nine');
     });
 
     test('Handle 10000, 10001, 10111, 11111, 21234, 67892, 99999', () {
       expect(integerToWordedString(10000), 'ten thousand');
       expect(integerToWordedString(10001), 'ten thousand one');
       expect(integerToWordedString(10111), 'ten thousand one hundred eleven');
-      expect(integerToWordedString(11111), 'eleven thousand one hundred eleven');
-      expect(integerToWordedString(21234), 'twenty one thousand two hundred thirty four');
-      expect(integerToWordedString(67892), 'sixty seven thousand eight hundred ninety two');
-      expect(integerToWordedString(99999), 'ninety nine thousand nine hundred ninety nine');
+      expect(
+          integerToWordedString(11111), 'eleven thousand one hundred eleven');
+      expect(integerToWordedString(21234),
+          'twenty one thousand two hundred thirty four');
+      expect(integerToWordedString(67892),
+          'sixty seven thousand eight hundred ninety two');
+      expect(integerToWordedString(99999),
+          'ninety nine thousand nine hundred ninety nine');
     });
 
+    test('Handle 100000, 100001, 101111, 111111, 212345, 678921, 999999', () {
+      expect(integerToWordedString(100000), 'one hundred thousand');
+      expect(integerToWordedString(100001), 'one hundred thousand one');
+      expect(integerToWordedString(101111),
+          'one hundred one thousand one hundred eleven');
+      expect(integerToWordedString(111111),
+          'one hundred eleven thousand one hundred eleven');
+      expect(integerToWordedString(212345),
+          'two hundred twelve thousand three hundred forty five');
+      expect(integerToWordedString(678921),
+          'six hundred seventy eight thousand nine hundred twenty one');
+      expect(integerToWordedString(999999),
+          'nine hundred ninety nine thousand nine hundred ninety nine');
+    });
   });
 }
