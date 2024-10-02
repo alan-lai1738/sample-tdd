@@ -79,5 +79,35 @@ void main() {
       expect(integerToWordedString(999999),
           'nine hundred ninety nine thousand nine hundred ninety nine');
     });
+
+    test('Handle 1000000, 1000001, 1011111, 1111111, 2123456, 6789210, 9999999',
+        () {
+      expect(integerToWordedString(1000000), 'one million');
+      expect(integerToWordedString(1000001), 'one million one');
+      expect(integerToWordedString(1011111),
+          'one million eleven thousand one hundred eleven');
+      expect(integerToWordedString(1111111),
+          'one million one hundred eleven thousand one hundred eleven');
+      expect(integerToWordedString(2123456),
+          'two million one hundred twenty three thousand four hundred fifty six');
+      expect(integerToWordedString(6789210),
+          'six million seven hundred eighty nine thousand two hundred ten');
+      expect(integerToWordedString(9999999),
+          'nine million nine hundred ninety nine thousand nine hundred ninety nine');
+    });
+
+    test(
+        'Handle various values in millions, hundreds of millions, billions, and up to 2^31 - 1',
+        () {
+      expect(integerToWordedString(10000000), 'ten million');
+      expect(integerToWordedString(12345678),
+          'twelve million three hundred forty five thousand six hundred seventy eight');
+      expect(integerToWordedString(100000000), 'one hundred million');
+      expect(integerToWordedString(234567890),
+          'two hundred thirty four million five hundred sixty seven thousand eight hundred ninety');
+      expect(integerToWordedString(1000000000), 'one billion');
+      expect(integerToWordedString(2147483647),
+          'two billion one hundred forty seven million four hundred eighty three thousand six hundred forty seven');
+    });
   });
 }

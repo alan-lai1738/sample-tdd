@@ -3,19 +3,16 @@ String integerToWordedString(int number) {
   if(number == 0) {
     return 'zero';
   }
-  if(number > 999999) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 999999");
-  }
   if(number < 1000) {
     return _getValue0to999AsString(number);
   } else {
     List<int> numberSplitUp = _splitNumbers(number);
     List<String> words = [];
-    List<String> numberNames = [" thousand"];
+    List<String> numberNames = [" billion", " million", " thousand"];
     for(int i = 0; i < numberSplitUp.length; i++) {
       if(numberSplitUp[i] != 0) {
         // we don't need to add a numberName for when the three digits are less than 1000
-        String numAsString = _getValue0to999AsString(numberSplitUp[i]) + ((i < 1) ? numberNames[i] : "");
+        String numAsString = _getValue0to999AsString(numberSplitUp[i]) + ((i < numberNames.length) ? numberNames[i] : "");
         words.add(numAsString);
       }
     }
@@ -25,15 +22,27 @@ String integerToWordedString(int number) {
 
 List<int> _splitNumbers(int number) {
   List<int> numSplit = [];
-  String numToStr = number.toString();
+  String numToStr = number.toString().padLeft(10, '0'); // Pad the string to ensure it has 10 digits
 
+  // Get the last three digits
   String lastThreeStr = numToStr.substring(numToStr.length - 3);
   int lastThree = int.parse(lastThreeStr); 
-  numSplit.insert(0, lastThree);
+  numSplit.insert(0, lastThree);  // Insert at the start for consistency
 
-  String firstPartStr = numToStr.substring(0, numToStr.length - 3);
-  int firstThreeNums = int.parse(firstPartStr); 
-  numSplit.insert(0, firstThreeNums);
+  // Get the middle three digits
+  String midThreeStr = numToStr.substring(numToStr.length - 6, numToStr.length - 3);
+  int midThree = int.parse(midThreeStr);
+  numSplit.insert(0, midThree);  // Insert at the start
+
+  // Get the next three digits (after the first digit)
+  String nextThreeStr = numToStr.substring(numToStr.length - 9, numToStr.length - 6);
+  int nextThree = int.parse(nextThreeStr);
+  numSplit.insert(0, nextThree);  // Insert at the start
+
+  // Get the first digit
+  String firstDigitStr = numToStr.substring(0, 1);
+  int firstDigit = int.parse(firstDigitStr);
+  numSplit.insert(0, firstDigit);  // Insert at the start
 
   return numSplit;
 }
