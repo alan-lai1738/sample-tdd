@@ -39,5 +39,17 @@ void main() {
       expect(integerToWordedString(222), 'two hundred twenty two');
       expect(integerToWordedString(999), 'nine hundred ninety nine');
     });
+
+
+
+    test('Handle 1000, 1001, 1002, 1011, 1111, 2222, 9999', () {
+      expect(integerToWordedString(1000), 'one thousand');
+      expect(integerToWordedString(1001), 'one thousand one');
+      expect(integerToWordedString(1002), 'one thousand two');
+      expect(integerToWordedString(1011), 'one thousand eleven');
+      expect(integerToWordedString(1111), 'one thousand one hundred eleven');
+      expect(integerToWordedString(2222), 'two thousand two hundred twenty two');
+      expect(integerToWordedString(9999), 'nine thousand nine hundred ninety nine');
+    });
   });
 }

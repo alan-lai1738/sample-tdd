@@ -4,10 +4,29 @@ String integerToWordedString(int number) {
   if(number == 0) {
     return 'zero';
   }
-  if(number > 999) {
-    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 999");
+  if(number > 9999) {
+    throw new UnimplementedError("integerToWordedString does not support absolute value numbers greater than 9999");
   }
-  if(1 <= number && number <= 9) {
+  if(number < 1000) {
+    return _getValue0to999AsString(number);
+  } else {
+    int firstDigit = number ~/ 1000;
+    String res = _getSingleDigitAsWordString(firstDigit) + " thousand";
+    number -= firstDigit * 1000;
+    String theRestOfTheDigitsAsString = _getValue0to999AsString(number);
+    if(theRestOfTheDigitsAsString != "zero") {
+      res += " " + theRestOfTheDigitsAsString;
+    }
+    return res;
+  }
+}
+
+String _getValue0to999AsString(int number) {
+  List<String> words = [];
+  if(number == 0) {
+    return 'zero';
+  }
+  else if(1 <= number && number <= 9) {
     words.add(_getSingleDigitAsWordString(number));
   } else if(10 <= number && number <= 99) {
     words.add(_get10to99ValueAsString(number));
