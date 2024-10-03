@@ -13,5 +13,12 @@ void main() {
     test('Negative numbers are not allowed', () {
       expect(() => integerToWordedString(-1), throwsA(isA<UnsupportedError>()));
     });
+
+    test('Handle double digit numbers that start with 1', () {
+      expect(integerToWordedString(10), equals('ten'));
+      expect(integerToWordedString(11), equals('eleven'));
+      expect(integerToWordedString(12), equals('twelve'));
+      expect(integerToWordedString(19), equals('nineteen'));
+    });
   });
 }
