@@ -9,5 +9,9 @@ void main() {
       expect(integerToWordedString(2), equals('two'));
       expect(integerToWordedString(9), equals('nine'));
     });
+
+    test('Negative numbers are not allowed', () {
+      expect(() => integerToWordedString(-1), throwsA(isA<UnsupportedError>()));
+    });
   });
 }
