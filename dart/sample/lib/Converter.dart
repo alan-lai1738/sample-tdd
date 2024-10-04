@@ -73,10 +73,10 @@ String _getDoubleDigitNumberAsString(int number) {
 }
 
 String _getMillionAsString(int number) {
-  int firstDigit = number ~/ 1000000;
-  int lastSixDigits = number - (firstDigit * 1000000);
+  int firstTwoDigits = number ~/ 1000000;
+  int lastSixDigits = number - (firstTwoDigits * 1000000);
   String resultString =
-      _getSingleDoubleOrTripleDigitNumberAsString(firstDigit) + " million";
+      _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits) + " million";
   if (lastSixDigits == 0)
     return resultString;
 
@@ -148,5 +148,5 @@ bool _isThousand(int number) {
 }
 
 bool _isMillion(int number) {
-  return 1000000 <= number && number <= 9999999;
+  return 1000000 <= number && number <= 99999999;
 }

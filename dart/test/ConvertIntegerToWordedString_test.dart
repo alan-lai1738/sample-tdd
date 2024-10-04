@@ -91,5 +91,16 @@ void main() {
       expect(integerToWordedString(7135791), equals('seven million one hundred thirty five thousand seven hundred ninety one'));
       expect(integerToWordedString(9999999), equals('nine million nine hundred ninety nine thousand nine hundred ninety nine'));
     });
+
+    test('Handle eight digit numbers', () {
+      expect(integerToWordedString(10000000), equals('ten million'));
+      expect(integerToWordedString(10000001), equals('ten million one'));
+      expect(integerToWordedString(20000000), equals('twenty million'));
+      expect(integerToWordedString(34567890), equals('thirty four million five hundred sixty seven thousand eight hundred ninety'));
+      expect(integerToWordedString(55555555), equals('fifty five million five hundred fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(71357913), equals('seventy one million three hundred fifty seven thousand nine hundred thirteen'));
+      expect(integerToWordedString(99999999), equals('ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+    });
+
   });
 }
