@@ -7,10 +7,10 @@ String integerToWordedString(int number) {
     return _getDoubleDigitNumberAsString(number);
   } else if (_isTripleDigit(number)) {
     return _getTripleDigitNumberAsString(number);
-  } else if (_isFourDigits(number)) {
-    return _getFourDigitNumberAsString(number);
+  } else if (_isThousand(number)) {
+    return _getThousandAsString(number);
   } else {
-    throw UnimplementedError("No support for #s > 999!");
+    throw UnimplementedError("No support for #s > 99999!");
   }
 }
 
@@ -70,18 +70,24 @@ String _getDoubleDigitNumberAsString(int number) {
   }
 }
 
-String _getFourDigitNumberAsString(int number) {
-  int firstDigit = number ~/ 1000;
-  int lastThreeDigits = number - (firstDigit * 1000);
-  String resultString = _getSingleDigitNumberAsString(firstDigit) + " thousand";
+// only supports to 99999 as of this version
+String _getThousandAsString(int number) {
+  int firstTwoDigits = number ~/ 1000;
+  int lastThreeDigits = number - (firstTwoDigits * 1000);
+  String resultString = _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits) + " thousand";
   if(lastThreeDigits == 0) return resultString;
-  resultString += " ";
-  if (_isTripleDigit(lastThreeDigits)) {
-    resultString += _getTripleDigitNumberAsString(lastThreeDigits);
-  } else if (_isDoubleDigit(lastThreeDigits)) {
-    resultString += _getDoubleDigitNumberAsString(lastThreeDigits);
-  } else if(_isSingleDigit(lastThreeDigits)){
-    resultString += _getSingleDigitNumberAsString(lastThreeDigits);
+  resultString += " " + _getSingleDoubleOrTripleDigitNumberAsString(lastThreeDigits);
+  return resultString;
+}
+
+String _getSingleDoubleOrTripleDigitNumberAsString(int number) {
+  String resultString = "";
+  if (_isTripleDigit(number)) {
+    resultString += _getTripleDigitNumberAsString(number);
+  } else if (_isDoubleDigit(number)) {
+    resultString += _getDoubleDigitNumberAsString(number);
+  } else if(_isSingleDigit(number)){
+    resultString += _getSingleDigitNumberAsString(number);
   }
   return resultString;
 }
@@ -112,6 +118,6 @@ bool _isTripleDigit(int number) {
   return 100 <= number && number <= 999;
 }
 
-bool _isFourDigits(int number) {
-  return 1000 <= number && number <= 9999;
+bool _isThousand(int number) {
+  return 10000 <= number && number <= 99999;
 }

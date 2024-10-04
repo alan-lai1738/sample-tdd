@@ -47,10 +47,29 @@ void main() {
       expect(integerToWordedString(1001), equals('one thousand one'));
       expect(integerToWordedString(1002), equals('one thousand two'));
       expect(integerToWordedString(2000), equals('two thousand'));
-      expect(integerToWordedString(3456), equals('three thousand four hundred fifty six'));
-      expect(integerToWordedString(5555), equals('five thousand five hundred fifty five'));
-      expect(integerToWordedString(7135), equals('seven thousand one hundred thirty five'));
-      expect(integerToWordedString(9999), equals('nine thousand nine hundred ninety nine'));
+      expect(integerToWordedString(3456),
+          equals('three thousand four hundred fifty six'));
+      expect(integerToWordedString(5555),
+          equals('five thousand five hundred fifty five'));
+      expect(integerToWordedString(7135),
+          equals('seven thousand one hundred thirty five'));
+      expect(integerToWordedString(9999),
+          equals('nine thousand nine hundred ninety nine'));
+    });
+
+    test('Handle five digit numbers', () {
+      expect(integerToWordedString(10000), equals('ten thousand'));
+      expect(integerToWordedString(10001), equals('ten thousand one'));
+      expect(integerToWordedString(10002), equals('ten thousand two'));
+      expect(integerToWordedString(20000), equals('twenty thousand'));
+      expect(integerToWordedString(34567),
+          equals('thirty four thousand five hundred sixty seven'));
+      expect(integerToWordedString(55555),
+          equals('fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(71357),
+          equals('seventy one thousand three hundred fifty seven'));
+      expect(integerToWordedString(99999),
+          equals('ninety nine thousand nine hundred ninety nine'));
     });
   });
 }
