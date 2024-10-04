@@ -74,7 +74,7 @@ String _getDoubleDigitNumberAsString(int number) {
 String _getThousandAsString(int number) {
   int firstTwoDigits = number ~/ 1000;
   int lastThreeDigits = number - (firstTwoDigits * 1000);
-  String resultString = _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits) + " thousand";
+  String resultString = _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits)+ " thousand";
   if(lastThreeDigits == 0) return resultString;
   resultString += " " + _getSingleDoubleOrTripleDigitNumberAsString(lastThreeDigits);
   return resultString;
@@ -119,5 +119,5 @@ bool _isTripleDigit(int number) {
 }
 
 bool _isThousand(int number) {
-  return 10000 <= number && number <= 99999;
+  return 1000 <= number && number <= 999999;
 }
