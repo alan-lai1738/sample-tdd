@@ -82,5 +82,14 @@ void main() {
       expect(integerToWordedString(999999), equals('nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
+    test('Handle seven digit numbers', () {
+      expect(integerToWordedString(1000000), equals('one million'));
+      expect(integerToWordedString(1000001), equals('one million one'));
+      expect(integerToWordedString(2000000), equals('two million'));
+      expect(integerToWordedString(3456789), equals('three million four hundred fifty six thousand seven hundred eighty nine'));
+      expect(integerToWordedString(5555555), equals('five million five hundred fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(7135791), equals('seven million one hundred thirty five thousand seven hundred ninety one'));
+      expect(integerToWordedString(9999999), equals('nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+    });
   });
 }

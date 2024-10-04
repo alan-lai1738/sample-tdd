@@ -9,8 +9,10 @@ String integerToWordedString(int number) {
     return _getTripleDigitNumberAsString(number);
   } else if (_isThousand(number)) {
     return _getThousandAsString(number);
+  } else if (_isMillion(number)) {
+    return _getMillionAsString(number);
   } else {
-    throw UnimplementedError("No support for #s > 99999!");
+    throw UnimplementedError("No support for #s > 9999999!");
   }
 }
 
@@ -70,13 +72,32 @@ String _getDoubleDigitNumberAsString(int number) {
   }
 }
 
-// only supports to 99999 as of this version
+String _getMillionAsString(int number) {
+  int firstDigit = number ~/ 1000000;
+  int lastSixDigits = number - (firstDigit * 1000000);
+  String resultString =
+      _getSingleDoubleOrTripleDigitNumberAsString(firstDigit) + " million";
+  if (lastSixDigits == 0)
+    return resultString;
+
+  resultString += " ";
+  if (_isThousand(lastSixDigits))
+    resultString += _getThousandAsString(lastSixDigits);
+  else if (_isSingleDoubleOrTripleDigit(lastSixDigits)) {
+    resultString += _getSingleDoubleOrTripleDigitNumberAsString(lastSixDigits);
+  }
+  return resultString;
+}
+
 String _getThousandAsString(int number) {
-  int firstTwoDigits = number ~/ 1000;
-  int lastThreeDigits = number - (firstTwoDigits * 1000);
-  String resultString = _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits)+ " thousand";
-  if(lastThreeDigits == 0) return resultString;
-  resultString += " " + _getSingleDoubleOrTripleDigitNumberAsString(lastThreeDigits);
+  int firstThreeDigits = number ~/ 1000;
+  int lastThreeDigits = number - (firstThreeDigits * 1000);
+  String resultString =
+      _getSingleDoubleOrTripleDigitNumberAsString(firstThreeDigits) +
+          " thousand";
+  if (lastThreeDigits == 0) return resultString;
+  resultString +=
+      " " + _getSingleDoubleOrTripleDigitNumberAsString(lastThreeDigits);
   return resultString;
 }
 
@@ -86,7 +107,7 @@ String _getSingleDoubleOrTripleDigitNumberAsString(int number) {
     resultString += _getTripleDigitNumberAsString(number);
   } else if (_isDoubleDigit(number)) {
     resultString += _getDoubleDigitNumberAsString(number);
-  } else if(_isSingleDigit(number)){
+  } else if (_isSingleDigit(number)) {
     resultString += _getSingleDigitNumberAsString(number);
   }
   return resultString;
@@ -96,12 +117,12 @@ String _getTripleDigitNumberAsString(int number) {
   int firstDigit = number ~/ 100;
   int lastTwoDigits = number - (firstDigit * 100);
   String resultString = _getSingleDigitNumberAsString(firstDigit) + " hundred";
-  if(lastTwoDigits == 0) return resultString;
+  if (lastTwoDigits == 0) return resultString;
   resultString += " ";
   if (_isDoubleDigit(lastTwoDigits)) {
-    resultString +=  _getDoubleDigitNumberAsString(lastTwoDigits);
-  } else if(_isSingleDigit(lastTwoDigits)){
-    resultString +=  _getSingleDigitNumberAsString(lastTwoDigits);
+    resultString += _getDoubleDigitNumberAsString(lastTwoDigits);
+  } else if (_isSingleDigit(lastTwoDigits)) {
+    resultString += _getSingleDigitNumberAsString(lastTwoDigits);
   }
   return resultString;
 }
@@ -118,6 +139,14 @@ bool _isTripleDigit(int number) {
   return 100 <= number && number <= 999;
 }
 
+bool _isSingleDoubleOrTripleDigit(int number) {
+  return 0 <= number && number <= 999;
+}
+
 bool _isThousand(int number) {
   return 1000 <= number && number <= 999999;
+}
+
+bool _isMillion(int number) {
+  return 1000000 <= number && number <= 9999999;
 }
