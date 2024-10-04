@@ -102,5 +102,15 @@ void main() {
       expect(integerToWordedString(99999999), equals('ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
+    test('Handle nine digit numbers', () {
+      expect(integerToWordedString(100000000), equals('one hundred million'));
+      expect(integerToWordedString(100000001), equals('one hundred million one'));
+      expect(integerToWordedString(200000000), equals('two hundred million'));
+      expect(integerToWordedString(345678901), equals('three hundred forty five million six hundred seventy eight thousand nine hundred one'));
+      expect(integerToWordedString(555555555), equals('five hundred fifty five million five hundred fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(713579135), equals('seven hundred thirteen million five hundred seventy nine thousand one hundred thirty five'));
+      expect(integerToWordedString(999999999), equals('nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+    });
+
   });
 }
