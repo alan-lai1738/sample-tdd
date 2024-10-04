@@ -7,6 +7,8 @@ String integerToWordedString(int number) {
     return _getDoubleDigitNumberAsString(number);
   } else if (_isTripleDigit(number)) {
     return _getTripleDigitNumberAsString(number);
+  } else if (_isFourDigits(number)) {
+    return _getFourDigitNumberAsString(number);
   } else {
     throw UnimplementedError("No support for #s > 999!");
   }
@@ -68,15 +70,32 @@ String _getDoubleDigitNumberAsString(int number) {
   }
 }
 
+String _getFourDigitNumberAsString(int number) {
+  int firstDigit = number ~/ 1000;
+  int lastThreeDigits = number - (firstDigit * 1000);
+  String resultString = _getSingleDigitNumberAsString(firstDigit) + " thousand";
+  if(lastThreeDigits == 0) return resultString;
+  resultString += " ";
+  if (_isTripleDigit(lastThreeDigits)) {
+    resultString += _getTripleDigitNumberAsString(lastThreeDigits);
+  } else if (_isDoubleDigit(lastThreeDigits)) {
+    resultString += _getDoubleDigitNumberAsString(lastThreeDigits);
+  } else if(_isSingleDigit(lastThreeDigits)){
+    resultString += _getSingleDigitNumberAsString(lastThreeDigits);
+  }
+  return resultString;
+}
+
 String _getTripleDigitNumberAsString(int number) {
   int firstDigit = number ~/ 100;
   int lastTwoDigits = number - (firstDigit * 100);
   String resultString = _getSingleDigitNumberAsString(firstDigit) + " hundred";
   if(lastTwoDigits == 0) return resultString;
+  resultString += " ";
   if (_isDoubleDigit(lastTwoDigits)) {
-    resultString += " " + _getDoubleDigitNumberAsString(lastTwoDigits);
+    resultString +=  _getDoubleDigitNumberAsString(lastTwoDigits);
   } else if(_isSingleDigit(lastTwoDigits)){
-    resultString += " " + _getSingleDigitNumberAsString(lastTwoDigits);
+    resultString +=  _getSingleDigitNumberAsString(lastTwoDigits);
   }
   return resultString;
 }
@@ -91,4 +110,8 @@ bool _isDoubleDigit(int number) {
 
 bool _isTripleDigit(int number) {
   return 100 <= number && number <= 999;
+}
+
+bool _isFourDigits(int number) {
+  return 1000 <= number && number <= 9999;
 }

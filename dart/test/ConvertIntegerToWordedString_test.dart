@@ -41,5 +41,16 @@ void main() {
       expect(integerToWordedString(715), equals('seven hundred fifteen'));
       expect(integerToWordedString(999), equals('nine hundred ninety nine'));
     });
+
+    test('Handle four digit numbers', () {
+      expect(integerToWordedString(1000), equals('one thousand'));
+      expect(integerToWordedString(1001), equals('one thousand one'));
+      expect(integerToWordedString(1002), equals('one thousand two'));
+      expect(integerToWordedString(2000), equals('two thousand'));
+      expect(integerToWordedString(3456), equals('three thousand four hundred fifty six'));
+      expect(integerToWordedString(5555), equals('five thousand five hundred fifty five'));
+      expect(integerToWordedString(7135), equals('seven thousand one hundred thirty five'));
+      expect(integerToWordedString(9999), equals('nine thousand nine hundred ninety nine'));
+    });
   });
 }
