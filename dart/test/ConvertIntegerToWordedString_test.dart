@@ -71,5 +71,16 @@ void main() {
       expect(integerToWordedString(99999),
           equals('ninety nine thousand nine hundred ninety nine'));
     });
+
+    test('Handle six digit numbers', () {
+      expect(integerToWordedString(100000), equals('one hundred thousand'));
+      expect(integerToWordedString(100001), equals('one hundred thousand one'));
+      expect(integerToWordedString(200000), equals('two hundred thousand'));
+      expect(integerToWordedString(345678), equals('three hundred forty five thousand six hundred seventy eight'));
+      expect(integerToWordedString(555555), equals('five hundred fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(713579), equals('seven hundred thirteen thousand five hundred seventy nine'));
+      expect(integerToWordedString(999999), equals('nine hundred ninety nine thousand nine hundred ninety nine'));
+    });
+
   });
 }
