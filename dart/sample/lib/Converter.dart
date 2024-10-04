@@ -12,7 +12,7 @@ String integerToWordedString(int number) {
   } else if (_isMillion(number)) {
     return _getMillionAsString(number);
   } else {
-    throw UnimplementedError("No support for #s > 9999999!");
+    throw UnimplementedError("No support for #s > 99999999!");
   }
 }
 
@@ -148,5 +148,5 @@ bool _isThousand(int number) {
 }
 
 bool _isMillion(int number) {
-  return 1000000 <= number && number <= 99999999;
+  return 1000000 <= number && number <= 999999999;
 }
