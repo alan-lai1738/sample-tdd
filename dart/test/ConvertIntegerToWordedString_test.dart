@@ -30,5 +30,16 @@ void main() {
       expect(integerToWordedString(75), equals('seventy five'));
       expect(integerToWordedString(99), equals('ninety nine'));
     });
+
+    test('Handle triple digit numbers', () {
+      expect(integerToWordedString(100), equals('one hundred'));
+      expect(integerToWordedString(101), equals('one hundred one'));
+      expect(integerToWordedString(102), equals('one hundred two'));
+      expect(integerToWordedString(200), equals('two hundred'));
+      expect(integerToWordedString(300), equals('three hundred'));
+      expect(integerToWordedString(555), equals('five hundred fifty five'));
+      expect(integerToWordedString(715), equals('seven hundred fifteen'));
+      expect(integerToWordedString(999), equals('nine hundred ninety nine'));
+    });
   });
 }
