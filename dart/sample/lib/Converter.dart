@@ -1,14 +1,14 @@
 String integerToWordedString(int number) {
   if (number < 0) {
     throw new UnsupportedError("Negative numbers not supported");
-  } else if (0 <= number && number <= 9) {
+  } else if (_isSingleDigit(number)) {
     return _getSingleDigitNumberAsString(number);
-  } else if (10 <= number && number <= 19) {
-    return _getDoubleDigitNumber10to19AsString(number);
-  } else if (20 <= number && number <= 99) {
-    return _getDoubleDigitNumber20to99AsString(number);
+  } else if (_isDoubleDigit(number)) {
+    return _getDoubleDigitNumberAsString(number);
+  } else if (_isTripleDigit(number)) {
+    return _getTripleDigitNumberAsString(number);
   } else {
-    throw UnimplementedError("No support for #s > 99!");
+    throw UnimplementedError("No support for #s > 999!");
   }
 }
 
@@ -28,41 +28,67 @@ String _getSingleDigitNumberAsString(int number) {
   return singleDigitNumsAsString[number];
 }
 
-String _getDoubleDigitNumber10to19AsString(int number) {
-  var doubleDigitNumsAsString = [
-    'ten',
-    'eleven',
-    'twelve',
-    'thirteen',
-    'fourteen',
-    'fiveteen',
-    'sixteen',
-    'seventeen',
-    'eighteen',
-    'nineteen'
-  ];
-  return doubleDigitNumsAsString[number - 10];
-}
-
-String _getDoubleDigitNumber20to99AsString(int number) {
-  int firstDigit = number ~/ 10;
-  int secondDigit = number % 10;
-  var doubleDigitNumsOf20to90AsString = [
-    '',
-    '',
-    'twenty',
-    'thirty',
-    'forty',
-    'fifty',
-    'sixty',
-    'seventy',
-    'eighty',
-    'ninety'
-  ];
-  String result = doubleDigitNumsOf20to90AsString[firstDigit];
-  if(secondDigit > 0) {
-    result += " " + _getSingleDigitNumberAsString(secondDigit);
+String _getDoubleDigitNumberAsString(int number) {
+  // 10 - 19 are a special double digit number case, since they can end in ten, eleven, or something-teen.
+  if (10 <= number && number <= 19) {
+    var doubleDigitNumsAsString = [
+      'ten',
+      'eleven',
+      'twelve',
+      'thirteen',
+      'fourteen',
+      'fifteen',
+      'sixteen',
+      'seventeen',
+      'eighteen',
+      'nineteen'
+    ];
+    return doubleDigitNumsAsString[number - 10];
+  } else {
+    // Otherwise, return 20-99 as string, as the strings for these #s are built consistently the same way.
+    int firstDigit = number ~/ 10;
+    int secondDigit = number % 10;
+    var doubleDigitNumsOf20to90AsString = [
+      '',
+      '',
+      'twenty',
+      'thirty',
+      'forty',
+      'fifty',
+      'sixty',
+      'seventy',
+      'eighty',
+      'ninety'
+    ];
+    String result = doubleDigitNumsOf20to90AsString[firstDigit];
+    if (secondDigit > 0) {
+      result += " " + _getSingleDigitNumberAsString(secondDigit);
+    }
+    return result;
   }
-  return result;
 }
 
+String _getTripleDigitNumberAsString(int number) {
+  int firstDigit = number ~/ 100;
+  int lastTwoDigits = number - (firstDigit * 100);
+  String resultString = _getSingleDigitNumberAsString(firstDigit) + " hundred";
+  if(lastTwoDigits == 0) return resultString;
+  if (_isDoubleDigit(lastTwoDigits)) {
+    resultString += " " + _getDoubleDigitNumberAsString(lastTwoDigits);
+  } else if(_isSingleDigit(lastTwoDigits)){
+    resultString += " " + _getSingleDigitNumberAsString(lastTwoDigits);
+  }
+  return resultString;
+}
+
+bool _isSingleDigit(int number) {
+  return 0 <= number && number <= 9;
+}
+
+bool _isDoubleDigit(int number) {
+  return 10 <= number && number <= 99;
+}
+
+bool _isTripleDigit(int number) {
+  return 100 <= number && number <= 999;
+}
