@@ -76,41 +76,102 @@ void main() {
       expect(integerToWordedString(100000), equals('one hundred thousand'));
       expect(integerToWordedString(100001), equals('one hundred thousand one'));
       expect(integerToWordedString(200000), equals('two hundred thousand'));
-      expect(integerToWordedString(345678), equals('three hundred forty five thousand six hundred seventy eight'));
-      expect(integerToWordedString(555555), equals('five hundred fifty five thousand five hundred fifty five'));
-      expect(integerToWordedString(713579), equals('seven hundred thirteen thousand five hundred seventy nine'));
-      expect(integerToWordedString(999999), equals('nine hundred ninety nine thousand nine hundred ninety nine'));
+      expect(
+          integerToWordedString(345678),
+          equals(
+              'three hundred forty five thousand six hundred seventy eight'));
+      expect(integerToWordedString(555555),
+          equals('five hundred fifty five thousand five hundred fifty five'));
+      expect(integerToWordedString(713579),
+          equals('seven hundred thirteen thousand five hundred seventy nine'));
+      expect(integerToWordedString(999999),
+          equals('nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
     test('Handle seven digit numbers', () {
       expect(integerToWordedString(1000000), equals('one million'));
       expect(integerToWordedString(1000001), equals('one million one'));
       expect(integerToWordedString(2000000), equals('two million'));
-      expect(integerToWordedString(3456789), equals('three million four hundred fifty six thousand seven hundred eighty nine'));
-      expect(integerToWordedString(5555555), equals('five million five hundred fifty five thousand five hundred fifty five'));
-      expect(integerToWordedString(7135791), equals('seven million one hundred thirty five thousand seven hundred ninety one'));
-      expect(integerToWordedString(9999999), equals('nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+      expect(
+          integerToWordedString(3456789),
+          equals(
+              'three million four hundred fifty six thousand seven hundred eighty nine'));
+      expect(
+          integerToWordedString(5555555),
+          equals(
+              'five million five hundred fifty five thousand five hundred fifty five'));
+      expect(
+          integerToWordedString(7135791),
+          equals(
+              'seven million one hundred thirty five thousand seven hundred ninety one'));
+      expect(
+          integerToWordedString(9999999),
+          equals(
+              'nine million nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
     test('Handle eight digit numbers', () {
       expect(integerToWordedString(10000000), equals('ten million'));
       expect(integerToWordedString(10000001), equals('ten million one'));
       expect(integerToWordedString(20000000), equals('twenty million'));
-      expect(integerToWordedString(34567890), equals('thirty four million five hundred sixty seven thousand eight hundred ninety'));
-      expect(integerToWordedString(55555555), equals('fifty five million five hundred fifty five thousand five hundred fifty five'));
-      expect(integerToWordedString(71357913), equals('seventy one million three hundred fifty seven thousand nine hundred thirteen'));
-      expect(integerToWordedString(99999999), equals('ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+      expect(
+          integerToWordedString(34567890),
+          equals(
+              'thirty four million five hundred sixty seven thousand eight hundred ninety'));
+      expect(
+          integerToWordedString(55555555),
+          equals(
+              'fifty five million five hundred fifty five thousand five hundred fifty five'));
+      expect(
+          integerToWordedString(71357913),
+          equals(
+              'seventy one million three hundred fifty seven thousand nine hundred thirteen'));
+      expect(
+          integerToWordedString(99999999),
+          equals(
+              'ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
     test('Handle nine digit numbers', () {
       expect(integerToWordedString(100000000), equals('one hundred million'));
-      expect(integerToWordedString(100000001), equals('one hundred million one'));
+      expect(
+          integerToWordedString(100000001), equals('one hundred million one'));
       expect(integerToWordedString(200000000), equals('two hundred million'));
-      expect(integerToWordedString(345678901), equals('three hundred forty five million six hundred seventy eight thousand nine hundred one'));
-      expect(integerToWordedString(555555555), equals('five hundred fifty five million five hundred fifty five thousand five hundred fifty five'));
-      expect(integerToWordedString(713579135), equals('seven hundred thirteen million five hundred seventy nine thousand one hundred thirty five'));
-      expect(integerToWordedString(999999999), equals('nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
+      expect(
+          integerToWordedString(345678901),
+          equals(
+              'three hundred forty five million six hundred seventy eight thousand nine hundred one'));
+      expect(
+          integerToWordedString(555555555),
+          equals(
+              'five hundred fifty five million five hundred fifty five thousand five hundred fifty five'));
+      expect(
+          integerToWordedString(713579135),
+          equals(
+              'seven hundred thirteen million five hundred seventy nine thousand one hundred thirty five'));
+      expect(
+          integerToWordedString(999999999),
+          equals(
+              'nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine'));
     });
 
+    test('Handle ten digit numbers', () {
+      expect(integerToWordedString(1000000000), equals('one billion'));
+      expect(integerToWordedString(1000000001), equals('one billion one'));
+      expect(integerToWordedString(1500000000),
+          equals('one billion five hundred million'));
+      expect(integerToWordedString(1000000005), equals('one billion five'));
+      expect(
+          integerToWordedString(1234567890),
+          equals(
+              'one billion two hundred thirty four million five hundred sixty seven thousand eight hundred ninety'));
+      expect(integerToWordedString(2000000009), equals('two billion nine'));
+      expect(integerToWordedString(2140000000),
+          equals('two billion one hundred forty million'));
+      expect(
+          integerToWordedString(2147483647),
+          equals(
+              'two billion one hundred forty seven million four hundred eighty three thousand six hundred forty seven'));
+    });
   });
 }
