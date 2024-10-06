@@ -11,8 +11,10 @@ String integerToWordedString(int number) {
     return _getThousandAsString(number);
   } else if (_isMillion(number)) {
     return _getMillionAsString(number);
+  } else if (_isBillion(number)) {
+    return _getBillionAsString(number);
   } else {
-    throw UnimplementedError("No support for #s > 99999999!");
+    throw UnimplementedError("No support for #s > 2147483647 (2^31 - 1)!");
   }
 }
 
@@ -72,13 +74,25 @@ String _getDoubleDigitNumberAsString(int number) {
   }
 }
 
+String _getBillionAsString(int number) {
+  int firstDigit = number ~/ 1000000000;
+  int lastNineDigits = number - (firstDigit * 1000000000);
+  String resultString =
+      _getSingleDigitNumberAsString(firstDigit) + " billion";
+  if (lastNineDigits == 0) return resultString;
+  resultString += " ";
+  if(_isMillion(lastNineDigits)) resultString += _getMillionAsString(lastNineDigits);
+  else if(_isThousand(lastNineDigits)) resultString += _getThousandAsString(lastNineDigits);
+  else resultString += _getSingleDoubleOrTripleDigitNumberAsString(lastNineDigits);
+  return resultString;
+}
+
 String _getMillionAsString(int number) {
   int firstTwoDigits = number ~/ 1000000;
   int lastSixDigits = number - (firstTwoDigits * 1000000);
   String resultString =
       _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits) + " million";
-  if (lastSixDigits == 0)
-    return resultString;
+  if (lastSixDigits == 0) return resultString;
 
   resultString += " ";
   if (_isThousand(lastSixDigits))
@@ -149,4 +163,8 @@ bool _isThousand(int number) {
 
 bool _isMillion(int number) {
   return 1000000 <= number && number <= 999999999;
+}
+
+bool _isBillion(int number) {
+  return 1000000000 <= number && number <= 2147483647;
 }
