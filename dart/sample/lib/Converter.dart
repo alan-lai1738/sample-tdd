@@ -1,4 +1,5 @@
 String integerToWordedString(int number) {
+  // Figure out which algorithm to use, which partition to use
   if (number < 0) {
     throw new UnsupportedError("Negative numbers not supported");
   }
