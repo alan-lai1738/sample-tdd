@@ -1,12 +1,10 @@
 String integerToWordedString(int number) {
   if (number < 0) {
     throw new UnsupportedError("Negative numbers not supported");
-  } else if (_isSingleDigit(number)) {
-    return _getSingleDigitNumberAsString(number);
-  } else if (_isDoubleDigit(number)) {
-    return _getDoubleDigitNumberAsString(number);
-  } else if (_isTripleDigit(number)) {
-    return _getTripleDigitNumberAsString(number);
+  } else if (number == 0) {
+    return 'zero';
+  } else if (_isOneToAHundredDigit(number)) {
+    return _getUpToHundredDigitNumberAsString(number);
   } else if (_isThousand(number)) {
     return _getThousandAsString(number);
   } else if (_isMillion(number)) {
@@ -74,48 +72,39 @@ String _getDoubleDigitNumberAsString(int number) {
   }
 }
 
-String _getBillionAsString(int number) {
-  int firstDigit = number ~/ 1000000000;
-  int lastNineDigits = number - (firstDigit * 1000000000);
-  String resultString =
-      _getSingleDigitNumberAsString(firstDigit) + " billion";
-  if (lastNineDigits == 0) return resultString;
-  resultString += " ";
-  if(_isMillion(lastNineDigits)) resultString += _getMillionAsString(lastNineDigits);
-  else if(_isThousand(lastNineDigits)) resultString += _getThousandAsString(lastNineDigits);
-  else resultString += _getSingleDoubleOrTripleDigitNumberAsString(lastNineDigits);
-  return resultString;
-}
-
-String _getMillionAsString(int number) {
-  int firstTwoDigits = number ~/ 1000000;
-  int lastSixDigits = number - (firstTwoDigits * 1000000);
-  String resultString =
-      _getSingleDoubleOrTripleDigitNumberAsString(firstTwoDigits) + " million";
-  if (lastSixDigits == 0) return resultString;
-
-  resultString += " ";
-  if (_isThousand(lastSixDigits))
-    resultString += _getThousandAsString(lastSixDigits);
-  else if (_isSingleDoubleOrTripleDigit(lastSixDigits)) {
-    resultString += _getSingleDoubleOrTripleDigitNumberAsString(lastSixDigits);
-  }
-  return resultString;
+String _getTripleDigitNumberAsString(int number) {
+  int firstDigit = number ~/ 100;
+  int lastTwoDigits = number - (firstDigit * 100);
+  String resultString = _getSingleDigitNumberAsString(firstDigit) + " hundred";
+  return resultString + _getLastDigitsAsString(lastTwoDigits);
 }
 
 String _getThousandAsString(int number) {
-  int firstThreeDigits = number ~/ 1000;
-  int lastThreeDigits = number - (firstThreeDigits * 1000);
+  // can be hundred thousands, ten thousands, or thousand
+  int thousandDigits = number ~/ 1000;
+  int lastThreeDigits = number - (thousandDigits * 1000);
   String resultString =
-      _getSingleDoubleOrTripleDigitNumberAsString(firstThreeDigits) +
-          " thousand";
-  if (lastThreeDigits == 0) return resultString;
-  resultString +=
-      " " + _getSingleDoubleOrTripleDigitNumberAsString(lastThreeDigits);
-  return resultString;
+      _getUpToHundredDigitNumberAsString(thousandDigits) + " thousand";
+  return resultString + _getLastDigitsAsString(lastThreeDigits);
 }
 
-String _getSingleDoubleOrTripleDigitNumberAsString(int number) {
+String _getMillionAsString(int number) {
+  int millionDigits = number ~/ 1000000;
+  int lastSixDigits = number - (millionDigits * 1000000);
+  String resultString =
+      _getUpToHundredDigitNumberAsString(millionDigits) + " million";
+  return resultString + _getLastDigitsAsString(lastSixDigits);
+}
+
+String _getBillionAsString(int number) {
+  int billionDigit = number ~/ 1000000000;
+  int lastNineDigits = number - (billionDigit * 1000000000);
+  String resultString =
+      _getSingleDigitNumberAsString(billionDigit) + " billion";
+  return resultString + _getLastDigitsAsString(lastNineDigits);
+}
+
+String _getUpToHundredDigitNumberAsString(int number) {
   String resultString = "";
   if (_isTripleDigit(number)) {
     resultString += _getTripleDigitNumberAsString(number);
@@ -127,18 +116,18 @@ String _getSingleDoubleOrTripleDigitNumberAsString(int number) {
   return resultString;
 }
 
-String _getTripleDigitNumberAsString(int number) {
-  int firstDigit = number ~/ 100;
-  int lastTwoDigits = number - (firstDigit * 100);
-  String resultString = _getSingleDigitNumberAsString(firstDigit) + " hundred";
-  if (lastTwoDigits == 0) return resultString;
-  resultString += " ";
-  if (_isDoubleDigit(lastTwoDigits)) {
-    resultString += _getDoubleDigitNumberAsString(lastTwoDigits);
-  } else if (_isSingleDigit(lastTwoDigits)) {
-    resultString += _getSingleDigitNumberAsString(lastTwoDigits);
-  }
-  return resultString;
+// the last 9 digits of a number can be 999 million or less, which we will turn into string.
+String _getLastDigitsAsString(int number) {
+  String lastDigitsAsString = " ";
+  if (_isOneToAHundredDigit(number))
+    lastDigitsAsString += _getUpToHundredDigitNumberAsString(number);
+  else if (_isThousand(number))
+    lastDigitsAsString += _getThousandAsString(number);
+  else if (_isMillion(number))
+    lastDigitsAsString += _getMillionAsString(number);
+  else
+    return "";
+  return lastDigitsAsString;
 }
 
 bool _isSingleDigit(int number) {
@@ -153,8 +142,8 @@ bool _isTripleDigit(int number) {
   return 100 <= number && number <= 999;
 }
 
-bool _isSingleDoubleOrTripleDigit(int number) {
-  return 0 <= number && number <= 999;
+bool _isOneToAHundredDigit(int number) {
+  return 1 <= number && number <= 999;
 }
 
 bool _isThousand(int number) {
