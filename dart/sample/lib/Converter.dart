@@ -1,19 +1,23 @@
 String integerToWordedString(int number) {
   if (number < 0) {
     throw new UnsupportedError("Negative numbers not supported");
-  } else if (number == 0) {
-    return 'zero';
-  } else if (_isOneToAHundredDigit(number)) {
-    return _getUpToHundredDigitNumberAsString(number);
-  } else if (_isThousand(number)) {
-    return _getThousandAsString(number);
-  } else if (_isMillion(number)) {
-    return _getMillionAsString(number);
-  } else if (_isBillion(number)) {
-    return _getBillionAsString(number);
-  } else {
-    throw UnimplementedError("No support for #s > 2147483647 (2^31 - 1)!");
   }
+  if (number == 0) {
+    return 'zero';
+  }
+  if (1 <= number && number <= 999) {
+    return _getUpToHundredDigitNumberAsString(number);
+  }
+  if (_isThousand(number)) {
+    return _getThousandAsString(number);
+  }
+  if (_isMillion(number)) {
+    return _getMillionAsString(number);
+  }
+  if (_isBillion(number)) {
+    return _getBillionAsString(number);
+  }
+  throw UnimplementedError("No support for #s > 2147483647 (2^31 - 1)!");
 }
 
 String _getSingleDigitNumberAsString(int number) {
@@ -49,27 +53,29 @@ String _getDoubleDigitNumberAsString(int number) {
     ];
     return doubleDigitNumsAsString[number - 10];
   } else {
-    // Otherwise, return 20-99 as string, as the strings for these #s are built consistently the same way.
-    int firstDigit = number ~/ 10;
-    int secondDigit = number % 10;
-    var doubleDigitNumsOf20to90AsString = [
-      '',
-      '',
-      'twenty',
-      'thirty',
-      'forty',
-      'fifty',
-      'sixty',
-      'seventy',
-      'eighty',
-      'ninety'
-    ];
-    String result = doubleDigitNumsOf20to90AsString[firstDigit];
-    if (secondDigit > 0) {
-      result += " " + _getSingleDigitNumberAsString(secondDigit);
-    }
-    return result;
+    return _get20to99AsString(number);
   }
+}
+
+String _get20to99AsString(int number) {
+  // Otherwise, return 20-99 as string, as the strings for these #s are built consistently the same way.
+  int firstDigit = number ~/ 10;
+  int secondDigit = number % 10;
+  var doubleDigitNumsOf20to90AsString = [
+    'twenty',
+    'thirty',
+    'forty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty',
+    'ninety'
+  ];
+  String result = doubleDigitNumsOf20to90AsString[firstDigit - 2];
+  if (secondDigit > 0) {
+    result += " " + _getSingleDigitNumberAsString(secondDigit);
+  }
+  return result;
 }
 
 String _getTripleDigitNumberAsString(int number) {
@@ -105,29 +111,33 @@ String _getBillionAsString(int number) {
 }
 
 String _getUpToHundredDigitNumberAsString(int number) {
-  String resultString = "";
   if (_isTripleDigit(number)) {
-    resultString += _getTripleDigitNumberAsString(number);
-  } else if (_isDoubleDigit(number)) {
-    resultString += _getDoubleDigitNumberAsString(number);
-  } else if (_isSingleDigit(number)) {
-    resultString += _getSingleDigitNumberAsString(number);
+    return _getTripleDigitNumberAsString(number);
   }
-  return resultString;
+  if (_isDoubleDigit(number)) {
+    return _getDoubleDigitNumberAsString(number);
+  }
+  if (_isSingleDigit(number)) {
+    return _getSingleDigitNumberAsString(number);
+  }
+  throw new Exception("Got an invalid number");
 }
 
 // the last 9 digits of a number can be 999 million or less, which we will turn into string.
 String _getLastDigitsAsString(int number) {
-  String lastDigitsAsString = " ";
-  if (_isOneToAHundredDigit(number))
-    lastDigitsAsString += _getUpToHundredDigitNumberAsString(number);
-  else if (_isThousand(number))
-    lastDigitsAsString += _getThousandAsString(number);
-  else if (_isMillion(number))
-    lastDigitsAsString += _getMillionAsString(number);
-  else
+  if (number == 0) {
     return "";
-  return lastDigitsAsString;
+  }
+  if (_isOneToAHundredDigit(number)) {
+    return " " + _getUpToHundredDigitNumberAsString(number);
+  }
+  if (_isThousand(number)) {
+    return " " + _getThousandAsString(number);
+  }
+  if (_isMillion(number)) {
+    return " " + _getMillionAsString(number);
+  }
+  throw new Exception("Got an invalid number");
 }
 
 bool _isSingleDigit(int number) {
