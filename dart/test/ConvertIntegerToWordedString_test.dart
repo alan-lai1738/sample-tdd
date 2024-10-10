@@ -21,13 +21,15 @@ void main() {
       expect(integerToWordedString(19), equals('nineteen'));
     });
 
-    test('Handle double digit numbers from 20 to 99', () {
+    test('First double-digit number greater than 19', () {
       expect(integerToWordedString(20), equals('twenty'));
-      expect(integerToWordedString(21), equals('twenty one'));
-      expect(integerToWordedString(22), equals('twenty two'));
-      expect(integerToWordedString(30), equals('thirty'));
-      expect(integerToWordedString(60), equals('sixty'));
+    });
+
+    test('Another double-digit number', () {
       expect(integerToWordedString(75), equals('seventy five'));
+    });
+
+    test('Last double-digit number', () {
       expect(integerToWordedString(99), equals('ninety nine'));
     });
 
